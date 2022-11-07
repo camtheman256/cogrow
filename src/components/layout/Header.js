@@ -258,9 +258,7 @@ function Header({
   handleSidenavType,
   handleFixedNavbar,
 }) {
-
   useEffect(() => window.scrollTo(0, 0));
-
 
   return (
     <>
@@ -284,6 +282,13 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
+          <Button
+            type="link"
+            className="sidebar-toggler"
+            onClick={() => onPress()}
+          >
+            {toggler}
+          </Button>
           <Link to="/sign-in" className="btn-sign-in">
             {profile}
             <span>Sign in</span>

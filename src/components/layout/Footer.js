@@ -21,12 +21,9 @@ function Footer() {
       <Row className="just">
         <Col xs={24} md={12} lg={12}>
           <div className="copyright">
-            © 2021, made with
+            © 2022, made with
             {<HeartFilled />} by
-            <a href="#pablo" className="font-weight-bold" target="_blank">
-              Creative Tim
-            </a>
-            for a better web.
+            the CoGrow Group
           </div>
         </Col>
         <Col xs={24} md={12} lg={12}>
@@ -34,38 +31,20 @@ function Footer() {
             <ul>
               <li className="nav-item">
                 <a
-                  href="#pablo"
+                  href="https://web.mit.edu/"
                   className="nav-link text-muted"
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
-                  Creative Tim
+                  MIT
                 </a>
               </li>
               <li className="nav-item">
                 <a
-                  href="#pablo"
+                  href="https://dusp.mit.edu/"
                   className="nav-link text-muted"
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
-                  About Us
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#pablo"
-                  className="nav-link text-muted"
-                  target="_blank"
-                >
-                  Blog
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#pablo"
-                  className="nav-link pe-0 text-muted"
-                  target="_blank"
-                >
-                  License
+                  MIT DUSP
                 </a>
               </li>
             </ul>
