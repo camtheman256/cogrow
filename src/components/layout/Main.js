@@ -22,14 +22,11 @@ const { Header: AntHeader, Content, Sider } = Layout;
 function Main({ children }) {
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
-  const [sidenavColor, setSidenavColor] = useState("#1890ff");
-  const [sidenavType, setSidenavType] = useState("transparent");
-  const [fixed, setFixed] = useState(false);
+  const sidenavColor = "#00aa00";
+  const sidenavType = "transparent";
+  const fixed = true;
 
   const openDrawer = () => setVisible(!visible);
-  const handleSidenavType = (type) => setSidenavType(type);
-  const handleSidenavColor = (color) => setSidenavColor(color);
-  const handleFixedNavbar = (type) => setFixed(type);
 
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
@@ -102,9 +99,6 @@ function Main({ children }) {
                 onPress={openDrawer}
                 name={pathname}
                 subName={pathname}
-                handleSidenavColor={handleSidenavColor}
-                handleSidenavType={handleSidenavType}
-                handleFixedNavbar={handleFixedNavbar}
               />
             </AntHeader>
           </Affix>
@@ -114,9 +108,6 @@ function Main({ children }) {
               onPress={openDrawer}
               name={pathname}
               subName={pathname}
-              handleSidenavColor={handleSidenavColor}
-              handleSidenavType={handleSidenavType}
-              handleFixedNavbar={handleFixedNavbar}
             />
           </AntHeader>
         )}
