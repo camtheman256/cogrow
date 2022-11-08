@@ -12,6 +12,7 @@
 
 import { Card, Col, Row } from "antd";
 import Title from "antd/lib/typography/Title";
+import ProjectCard from "../components/custom/ProjectCard";
 
 
 
@@ -30,7 +31,9 @@ function Home() {
           </Col>
           <Col md={18}>
             <Title>CoGrow Projects</Title>
-            
+            <Row gutter={[16, 16]}>
+              <ProjectCard />
+            </Row>
           </Col>
         </Row>
       </div>
