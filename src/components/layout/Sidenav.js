@@ -11,13 +11,29 @@
 */
 
 // import { useState } from "react";
+import { InfoCircleFilled, PushpinFilled, ReadFilled } from "@ant-design/icons";
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/cogrow-logo.png";
 
+function SidenavItem({ color, label, icon, active, link }) {
+  return  <Menu.Item>
+          <NavLink to={link}>
+            <span
+              className="icon"
+              style={{
+                background: active ? color : "",
+              }}
+            >
+              {icon}
+            </span>
+            <span className="label">{label}</span>
+          </NavLink>
+        </Menu.Item>
+}
+
 function Sidenav({ color }) {
   const { pathname } = useLocation();
-  const page = pathname.replace("/", "");
 
   const dashboard = [
     <svg
@@ -42,6 +58,24 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
+  const routes = [{
+    label: 'Dashboard',
+    link: '/dashboard',
+    icon: dashboard
+  },{
+    label: 'About',
+    link: '/about',
+    icon: <InfoCircleFilled />
+  }, {
+    label: 'Learn',
+    link: '/learn',
+    icon: <ReadFilled />
+  }, {
+    label: 'Map',
+    link: '/map',
+    icon: <PushpinFilled />
+  }]
+
 
   return (
     <>
@@ -51,19 +85,7 @@ function Sidenav({ color }) {
       </div>
       <hr />
       <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
-          <NavLink to="/dashboard">
-            <span
-              className="icon"
-              style={{
-                background: page === "dashboard" ? color : "",
-              }}
-            >
-              {dashboard}
-            </span>
-            <span className="label">Dashboard</span>
-          </NavLink>
-        </Menu.Item>
+        {routes.map((r, i) => <SidenavItem key={i} color={color} active={pathname === r.link} {...r} />)}
       </Menu>
     </>
   );

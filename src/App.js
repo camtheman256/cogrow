@@ -18,6 +18,9 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { initializeApp } from "firebase/app";
+import About from "./pages/About";
+import Learn from "./pages/Learn";
+import Map from "./pages/Map";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDXJ0RymG8MZCgzjDAgskdoLOAKvkWTTEU",
@@ -38,6 +41,9 @@ function App() {
         <Route path="/sign-in" exact component={SignIn} />
         <Main>
           <Route exact path="/dashboard" component={Home} />
+          <Route path="/about" exact component={About} />
+          <Route path="/learn" exact component={Learn} />
+          <Route path="/map" exact component={Map} />
           <Redirect from="*" to="/dashboard" />
         </Main>
       </Switch>
