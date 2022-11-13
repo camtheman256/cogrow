@@ -17,36 +17,27 @@ import Main from "./components/layout/Main";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import { initializeApp } from "firebase/app";
 import About from "./pages/About";
 import Learn from "./pages/Learn";
 import MapPage from "./pages/Map";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDXJ0RymG8MZCgzjDAgskdoLOAKvkWTTEU",
-  authDomain: "cogrow-5b957.firebaseapp.com",
-  projectId: "cogrow-5b957",
-  storageBucket: "cogrow-5b957.appspot.com",
-  messagingSenderId: "952173385772",
-  appId: "1:952173385772:web:24e56dfbca0d3f32cad989",
-  measurementId: "G-PPJMWQJ45W",
-};
-initializeApp(firebaseConfig);
 
 function App() {
   return (
     <div className="App">
-      <Route path="/sign-up" exact component={SignUp} />
-      <Route path="/sign-in" exact component={SignIn} />
-      <Main>
-        <Switch>
-          <Route exact path="/dashboard" component={Home} />
-          <Route path="/about" exact component={About} />
-          <Route path="/learn" exact component={Learn} />
-          <Route path="/map" exact component={MapPage} />
-          <Redirect from="*" to="/dashboard" />
-        </Switch>
-      </Main>
+      <Switch>
+        <Route path="/sign-up" exact component={SignUp} />
+        <Route path="/sign-in" exact component={SignIn} />
+        <Main>
+          <Switch>
+            <Route exact path="/dashboard" component={Home} />
+            <Route path="/about" exact component={About} />
+            <Route path="/learn" exact component={Learn} />
+            <Route path="/map" exact component={MapPage} />
+            <Redirect from="*" to="/dashboard" />
+          </Switch>
+        </Main>
+      </Switch>
     </div>
   );
 }

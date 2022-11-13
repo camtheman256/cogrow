@@ -16,8 +16,8 @@ import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/cogrow-logo.png";
 
-function SidenavItem({ color, label, icon, active, link }) {
-  return  <Menu.Item>
+function SidenavItem({ color, label, icon, active, link, key }) {
+  return  <Menu.Item key={key}>
           <NavLink to={link}>
             <span
               className="icon"

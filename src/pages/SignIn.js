@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -21,14 +21,12 @@ import {
   Form,
   Input,
   Switch,
+  Checkbox,
+  Alert,
 } from "antd";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import signinbg from "../assets/images/img-signin.jpg";
-import {
-  DribbbleOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  GithubOutlined,
-} from "@ant-design/icons";
+import { auth } from "../firebase";
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const template = (
@@ -60,9 +58,18 @@ const template = (
     ></path>
   </svg>
 );
-export default function SignIn(props) {
+
+export default function SignIn() {
+  const [error, setError] = useState(null);
+  const history = useHistory();
+
   const onFinish = (values) => {
-    console.log(values)
+    signInWithEmailAndPassword(auth, values.email, values.password)
+    .then(() => history.push('/dashboard'))
+    .catch((error) => {
+      console.error(error.message)
+      setError(error)
+    })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -115,7 +122,7 @@ export default function SignIn(props) {
                     },
                   ]}
                 >
-                  <Input placeholder="Email" />
+                  <Input placeholder="Email" type={'email'} />
                 </Form.Item>
 
                 <Form.Item
@@ -129,16 +136,7 @@ export default function SignIn(props) {
                     },
                   ]}
                 >
-                  <Input placeholder="Password" />
-                </Form.Item>
-
-                <Form.Item
-                  name="remember"
-                  className="aligin-center"
-                  valuePropName="checked"
-                >
-                  <Switch />
-                  Remember me
+                  <Input placeholder="Password" type="password" />
                 </Form.Item>
 
                 <Form.Item>
@@ -150,6 +148,7 @@ export default function SignIn(props) {
                     SIGN IN
                   </Button>
                 </Form.Item>
+                {error && <Alert message={error.message} type='error' />}
                 <p className="font-semibold text-muted">
                   Don't have an account?{" "}
                   <Link to="/sign-up" className="text-dark font-bold">

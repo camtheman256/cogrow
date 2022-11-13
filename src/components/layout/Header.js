@@ -37,6 +37,8 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -259,6 +261,8 @@ function Header({
   handleFixedNavbar,
 }) {
   useEffect(() => window.scrollTo(0, 0));
+  const [user, setUser] = useState();
+  onAuthStateChanged(auth, setUser);
 
   return (
     <>
@@ -289,10 +293,19 @@ function Header({
           >
             {toggler}
           </Button>
-          <Link to="/sign-in" className="btn-sign-in">
-            {profile}
-            <span>Sign in</span>
-          </Link>
+          {user ? (
+            <div>
+              <span>
+                {profile} Welcome {user.email}
+              </span>
+              <Button size={'small'} onClick={() => signOut(auth)}>Sign Out</Button>
+            </div>
+          ) : (
+            <Link to="/sign-in" className="btn-sign-in">
+              {profile}
+              <span>Sign in</span>
+            </Link>
+          )}
         </Col>
       </Row>
     </>
