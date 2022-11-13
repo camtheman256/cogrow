@@ -17,6 +17,18 @@ import Main from "./components/layout/Main";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDXJ0RymG8MZCgzjDAgskdoLOAKvkWTTEU",
+  authDomain: "cogrow-5b957.firebaseapp.com",
+  projectId: "cogrow-5b957",
+  storageBucket: "cogrow-5b957.appspot.com",
+  messagingSenderId: "952173385772",
+  appId: "1:952173385772:web:24e56dfbca0d3f32cad989",
+  measurementId: "G-PPJMWQJ45W"
+};
+initializeApp(firebaseConfig);
 
 function App() {
   return (
