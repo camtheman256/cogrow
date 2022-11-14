@@ -15,7 +15,7 @@ export default function MapPage() {
           latitude: 39.948699,
           zoom: 11,
         }}
-        style={{borderRadius: 10}}
+        style={{borderRadius: 10, height: 'calc(100vh - 200px)'}}
       />
     </>
   );
