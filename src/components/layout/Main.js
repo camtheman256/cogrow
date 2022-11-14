@@ -75,22 +75,6 @@ function Main({ children }) {
           </Sider>
         </Layout>
       </Drawer>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        trigger={null}
-        width={250}
-        theme="light"
-        className={`sider-primary ant-layout-sider-primary ${
-          sidenavType === "#fff" ? "active-route" : ""
-        }`}
-        style={{ background: sidenavType }}
-      >
-        <Sidenav color={sidenavColor} />
-      </Sider>
       <Layout>
         {fixed ? (
           <Affix>

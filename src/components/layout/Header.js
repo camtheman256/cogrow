@@ -33,6 +33,7 @@ import {
   TwitterOutlined,
   FacebookFilled,
 } from "@ant-design/icons";
+import logo from "../../assets/images/cogrow-logo.png";
 
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
@@ -268,6 +269,21 @@ function Header({
     <>
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
+          <Row align="middle" style={{marginBottom: '0.5rem'}}>
+            <Button
+              type="link"
+              className="sidebar-toggler"
+              onClick={() => onPress()}
+            >
+              {toggler}
+            </Button>
+            <div className="brand">
+              <img src={logo} alt="" />
+              <span>CoGrow</span>
+            </div>
+          </Row>
+        </Col>
+        <Col span={18} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
@@ -285,20 +301,15 @@ function Header({
             </span>
           </div>
         </Col>
-        <Col span={24} md={18} className="header-control">
-          <Button
-            type="link"
-            className="sidebar-toggler"
-            onClick={() => onPress()}
-          >
-            {toggler}
-          </Button>
+        <Col span={6} md={12} className="header-control">
           {user ? (
             <div>
               <span>
                 {profile} Welcome {user.email}
               </span>
-              <Button size={'small'} onClick={() => signOut(auth)}>Sign Out</Button>
+              <Button size={"small"} onClick={() => signOut(auth)}>
+                Sign Out
+              </Button>
             </div>
           ) : (
             <Link to="/sign-in" className="btn-sign-in">
