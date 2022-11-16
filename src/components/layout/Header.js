@@ -40,6 +40,7 @@ import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import { useUser } from "../../hooks";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -262,8 +263,7 @@ function Header({
   handleFixedNavbar,
 }) {
   useEffect(() => window.scrollTo(0, 0));
-  const [user, setUser] = useState();
-  onAuthStateChanged(auth, setUser);
+  const user = useUser();
 
   return (
     <>

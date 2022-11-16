@@ -1,11 +1,13 @@
 import Map, { Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useState } from "react";
+import { useUser } from "../hooks";
 
 export default function MapPage() {
   const accessToken =
     "pk.eyJ1IjoiY2tsZWltYW4xNSIsImEiOiJjazhseTJvcnMwOWdvM2hvOHE2ejk0ZHhoIn0.dp27-MIUTPYjRr-VLw1Rqg";
   const [popup, setPopup] = useState(null);
+  const user = useUser()
 
   function handleMapClick(e) {
     setPopup(e.lngLat);
@@ -28,6 +30,7 @@ export default function MapPage() {
         {popup && (
           <Popup longitude={popup.lng} latitude={popup.lat} closeOnClick={false} onClose={() => setPopup()}>
             <p>Create a Project at ({popup.lng.toFixed(5)}, {popup.lat.toFixed(5)})</p>
+            {!user && <p><b>Please sign in before creating a project.</b></p>}
           </Popup>
         )}
       </Map>
