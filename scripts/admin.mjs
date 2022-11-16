@@ -5,9 +5,12 @@ const app = initializeApp({
   credential: applicationDefault(),
 });
 
-function setAdmin(uid) {
-  getAuth(app)
-    .setCustomUserClaims(uid, { admin: true })
-    .then(() => console.log("User set to admin successfully."));
+async function setAdmin(uid) {
+  await getAuth(app)
+    .setCustomUserClaims(uid, { admin: true });
+  console.log("User set to admin successfully.");
 }
 
+async function getUserInfo(uid) {
+  return await getAuth(app).getUser(uid)
+}
