@@ -25,7 +25,7 @@ import {
   Alert,
 } from "antd";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import signinbg from "../assets/images/Philly_3.webp";
+import signinbg from "../assets/images/Philly_2.webp";
 import { auth } from "../firebase";
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
