@@ -1,6 +1,8 @@
 import { Form, Input, Layout } from "antd";
 import { useParams } from "react-router-dom";
 import logo from "../assets/images/cogrow-logo.png";
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Space, Upload } from 'antd';
 
 export default function SubmissionPage() {
   const { project } = useParams();
@@ -30,9 +32,7 @@ export default function SubmissionPage() {
     </li>
   </ul>
 
-  import { UploadOutlined } from '@ant-design/icons';
-import { Button, Space, Upload } from 'antd';
-import React from 'react';
+
 
 const App: React.FC = () => (
   <Space direction="vertical" style={{ width: '100%' }} size="large">
@@ -46,10 +46,10 @@ const App: React.FC = () => (
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       listType="picture"
-      maxCount={3}
+      maxCount={1}
       multiple
     >
-      <Button icon={<UploadOutlined />}>Upload (Max: 3)</Button>
+      <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
     </Upload>
   </Space>
 );
