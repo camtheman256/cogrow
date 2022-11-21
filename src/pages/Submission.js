@@ -45,7 +45,7 @@ export default function SubmissionPage() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    style={{ width: "100%" }}
+                    style={{ width: "20%" }}
                   >
                     Submit
                   </Button>
