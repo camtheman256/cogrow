@@ -14,7 +14,7 @@ export default function SubmissionPage() {
       </div>
     </Layout.Header>
     <Layout.Content>
-      <h1>Submit a Design for Project {project}</h1>
+      <h1>Submit a Design for Project</h1>
       
   <Space direction="vertical" style={{ width: '100%' }} size="large">
     <Upload
