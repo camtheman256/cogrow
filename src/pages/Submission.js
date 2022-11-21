@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { Form, Input, Layout } from "antd";
 import { useParams } from "react-router-dom";
 import logo from "../assets/images/cogrow-logo.png";
 
@@ -15,20 +15,20 @@ export default function SubmissionPage() {
       <Layout.Content>
         <h1>Submit a Design for Project {project}</h1>
 
-        <form>
-            <div>
+        <Form>
+            <Form.Item>
               <label for="name">Name:</label>
-              <input type="text" id="name" name="user_name" />
-            </div>
-            <div>
+              <Input type="text" id="name" name="user_name" />
+            </Form.Item>
+            <Form.Item>
               <label for="mail">E-mail:</label>
-              <input type="email" id="mail" name="user_email" />
-            </div>
-            <div>
+              <Input type="email" id="mail" name="user_email" />
+            </Form.Item>
+            <Form.Item>
               <label for="msg">Message:</label>
-              <textarea id="msg" name="user_message"></textarea>
-            </div>
-        </form>
+              <Input.TextArea id="msg" name="user_message" />
+            </Form.Item>
+        </Form>
       </Layout.Content>
     </Layout>
   );
