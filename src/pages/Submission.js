@@ -29,19 +29,19 @@ export default function SubmissionPage() {
       <form action="/my-handling-form-page" method="post">
   <ul>
   <br></br>
-    <li>
+    <div>
       <label for="name">Name:</label>
       <input type="text" id="name" name="user_name" />
-    </li>
+    </div>
     <br></br>
-    <li>
+    <div>
       <label for="msg">Message:</label>
       <textarea id="msg" name="user_message"></textarea>
-    </li>
+    </div>
     <br></br>
-    <li class="button">
+    <div class="button">
   <button type="submit">Submit</button>
-</li>
+</div>
 
   </ul>
   
