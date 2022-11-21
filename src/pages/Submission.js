@@ -15,7 +15,9 @@ export default function SubmissionPage() {
     </Layout.Header>
     <Layout.Content>
       <h1>Submit a Design for Project</h1>
-      
+
+   <form action="/my-handling-form-page" method="post">
+       
   <Space direction="vertical" style={{ width: '100%' }} size="large">
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -26,8 +28,7 @@ export default function SubmissionPage() {
     </Upload>
   </Space>
 
-      <form action="/my-handling-form-page" method="post">
-  <ul>
+      
   <br></br>
     <div>
       <label for="name">Name:</label>
@@ -43,7 +44,6 @@ export default function SubmissionPage() {
   <button type="submit">Submit</button>
 </div>
 
-  </ul>
   
 </form>
 
