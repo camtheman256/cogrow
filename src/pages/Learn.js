@@ -1,7 +1,6 @@
 export default function Learn() {
   return <>
     <div className="layout-content">
-      <h1>Learn about CoGrow</h1>
       
       <h1>Permeable paving</h1>
       <body>Permeable or porous pavement allows water to soak through the surface rather than flow over the surface and into storm drains. This system provides the structural support of conventional pavement but also has an underground stone reservoir.
