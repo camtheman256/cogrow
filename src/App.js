@@ -20,6 +20,7 @@ import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Learn from "./pages/Learn";
 import MapPage from "./pages/Map";
+import SubmissionPage from "./pages/Submission";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
+        <Route path="/submit/:project" exact component={SubmissionPage} />
         <Main>
           <Switch>
             <Route exact path="/dashboard" component={Home} />
