@@ -17,18 +17,6 @@ export default function SubmissionPage() {
       <h1>Submit a Design for Project</h1>
 
    <form action="/my-handling-form-page" method="post">
-       
-  <Space direction="vertical" style={{ width: '100%' }} size="large">
-    <Upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      listType="picture"
-      maxCount={1}
-    >
-      <Button icon={<UploadOutlined />}>Upload</Button>
-    </Upload>
-  </Space>
-
-      
   <br></br>
     <div>
       <label for="name">Name:</label>
@@ -40,6 +28,16 @@ export default function SubmissionPage() {
       <textarea id="msg" name="user_message"></textarea>
     </div>
     <br></br>
+    <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <Upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      maxCount={1}
+    >
+      <Button icon={<UploadOutlined />}>Upload</Button>
+    </Upload>
+  </Space>
+  <br></br>
     <div class="button">
   <button type="submit">Submit</button>
 </div>
