@@ -41,9 +41,15 @@ export default function SubmissionPage() {
   <br></br>
   <br></br>
   <br></br>
-    <div class="button">
-  <button type="submit">Submit</button>
-</div>
+  <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: "100%" }}
+                  >
+                    Submit
+                  </Button>
+                </Form.Item>
 
   
 </form>
