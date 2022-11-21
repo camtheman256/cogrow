@@ -15,4 +15,5 @@ export default function SubmissionPage() {
       <h1>Submit a Design for Project {project}</h1>
     </Layout.Content>
   </Layout>
-}
+  }
+  </Layout>
