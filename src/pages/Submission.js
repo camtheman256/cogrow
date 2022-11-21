@@ -25,9 +25,10 @@ export default function SubmissionPage() {
       <Button icon={<UploadOutlined />}>Upload</Button>
     </Upload>
   </Space>
-<br></br>
+
       <form action="/my-handling-form-page" method="post">
   <ul>
+  <br></br>
     <li>
       <label for="name">Name:</label>
       <input type="text" id="name" name="user_name" />
@@ -37,6 +38,11 @@ export default function SubmissionPage() {
       <label for="msg">Message:</label>
       <textarea id="msg" name="user_message"></textarea>
     </li>
+    <br></br>
+    <li class="button">
+  <button type="submit">Submit</button>
+</li>
+
   </ul>
   
 </form>
