@@ -37,6 +37,9 @@ export default function SubmissionPage() {
       <Button icon={<UploadOutlined />}>Upload</Button>
     </Upload>
   </Space>
+
+  <br></br>
+  <br></br>
   <br></br>
     <div class="button">
   <button type="submit">Submit</button>
