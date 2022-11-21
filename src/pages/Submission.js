@@ -22,7 +22,7 @@ export default function SubmissionPage() {
       listType="picture"
       maxCount={1}
     >
-      <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+      <Button icon={<UploadOutlined />}>Upload</Button>
     </Upload>
   </Space>
 
