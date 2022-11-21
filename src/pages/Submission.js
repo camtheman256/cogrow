@@ -16,6 +16,16 @@ export default function SubmissionPage() {
     <Layout.Content>
       <h1>Submit a Design for Project {project}</h1>
       
+  <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <Upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      maxCount={1}
+    >
+      <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+    </Upload>
+  </Space>
+
       <form action="/my-handling-form-page" method="post">
   <ul>
     <li>
@@ -31,30 +41,6 @@ export default function SubmissionPage() {
       <textarea id="msg" name="user_message"></textarea>
     </li>
   </ul>
-
-
-
-const App: React.FC = () => (
-  <Space direction="vertical" style={{ width: '100%' }} size="large">
-    <Upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      listType="picture"
-      maxCount={1}
-    >
-      <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
-    </Upload>
-    <Upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      listType="picture"
-      maxCount={1}
-      multiple
-    >
-      <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
-    </Upload>
-  </Space>
-);
-
-export default App;
   
 </form>
 
