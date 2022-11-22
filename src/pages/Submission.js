@@ -19,6 +19,10 @@ export default function SubmissionPage() {
    <form action="/my-handling-form-page" method="post">
   <br></br>
     <div>
+    <Title className="mb-15">Sign In</Title>
+              <Title className="font-regular text-muted" level={5}>
+                Name:
+              </Title>
       <label for="name">Name:</label>
       <input type="text" id="name" name="user_name" />
     </div>
@@ -45,7 +49,7 @@ export default function SubmissionPage() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    style={{ width: "20%" }}
+                    style={{ width: "10%" }}
                   >
                     Submit
                   </Button>
