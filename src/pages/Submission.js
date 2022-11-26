@@ -16,6 +16,8 @@ export default function SubmissionPage() {
     <Layout.Content>
       <h1>Submit a Design for Project</h1>
 
+
+
    <form action="/my-handling-form-page" method="post">
   <br></br>
     <div>
@@ -23,6 +25,22 @@ export default function SubmissionPage() {
               <Title className="font-regular text-muted" level={5}>
                 Name:
               </Title>
+
+
+              <Form.Item
+                  className="username"
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Password" type="password" />
+                </Form.Item>
+              
       <label for="name">Name:</label>
       <input type="text" id="name" name="user_name" />
     </div>
