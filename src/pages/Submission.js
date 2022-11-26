@@ -29,12 +29,12 @@ export default function SubmissionPage() {
 
               <Form.Item
                   className="username"
-                  label="Password"
-                  name="password"
+                  label="Name"
+                  name="Name"
                   rules={[
                     {
                       required: true,
-                      message: "Please input your password!",
+                      message: "Please input your Name!",
                     },
                   ]}
                 >
