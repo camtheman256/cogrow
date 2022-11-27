@@ -22,7 +22,6 @@ export default function SubmissionPage() {
   <br></br>
               <Form.Item
                   className="username"
-                 
                   name="Name"
                   rules={[
                     {
