@@ -20,16 +20,9 @@ export default function SubmissionPage() {
 
    <form action="/my-handling-form-page" method="post">
   <br></br>
-    <div>
-    <Title className="mb-15">Sign In</Title>
-              <Title className="font-regular text-muted" level={5}>
-                Name:
-              </Title>
-
-
               <Form.Item
                   className="username"
-                  label="Name"
+                 
                   name="Name"
                   rules={[
                     {
@@ -38,18 +31,19 @@ export default function SubmissionPage() {
                     },
                   ]}
                 >
-                  <Input placeholder="Password" type="password" />
+                  <Input placeholder="Name" type="Name" />
                 </Form.Item>
               
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="user_name" />
-    </div>
-    <br></br>
-    <div>
-      <label for="msg">Message:</label>
-      <textarea id="msg" name="user_message"></textarea>
-    </div>
-    <br></br>
+    
+                 <Input.TextArea
+                showCount
+                maxLength={100}
+                style={{
+                height: 100,
+               }}
+               placeholder="Leave a Message"
+                />
+
     <Space direction="vertical" style={{ width: '100%' }} size="large">
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -67,14 +61,14 @@ export default function SubmissionPage() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    style={{ width: "10%" }}
+                    style={{ width: "10" }}
                   >
                     Submit
                   </Button>
                 </Form.Item>
 
   
-</form>
+  </form>
 
     </Layout.Content>
   </Layout>
