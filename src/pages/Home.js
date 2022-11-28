@@ -19,7 +19,7 @@ function Home() {
     title: "CoGrow Project",
     subtitle: "Project Code: abcdef",
     status: "Ongoing",
-    description: "Lorem ipsum",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     numSubmissions: 37,
     creationDate: "3 days ago",
     learnMoreLink: "/",
