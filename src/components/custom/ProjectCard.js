@@ -15,7 +15,7 @@ export default function ProjectCard({
   learnMoreLink
 }) {
   return (
-    <Card>
+    <Card bordered={false} style={{backgroundColor: '#fafafa', boxShadow: 'none'}}>
       <div className="card-module">
         <div className="thumbnail">
           <div className="sub_thumbnail">
