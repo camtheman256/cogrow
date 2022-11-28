@@ -5,7 +5,7 @@ import { useUser } from "../hooks";
 
 export default function MapPage() {
   const accessToken =
-    "pk.eyJ1IjoiY2tsZWltYW4xNSIsImEiOiJjazhseTJvcnMwOWdvM2hvOHE2ejk0ZHhoIn0.dp27-MIUTPYjRr-VLw1Rqg";
+    "pk.eyJ1IjoibGluaC10cmluaCIsImEiOiJjbDl3dThkYWswNDNiM25wajhrZXlneTE1In0.9GCUDxTX5FwtVbHDtXz5ew";
   const [popup, setPopup] = useState(null);
   const user = useUser()
 
@@ -17,7 +17,7 @@ export default function MapPage() {
   return (
     <>
       <Map
-        mapStyle={"mapbox://styles/ckleiman15/cl9w5emm8000b14p5c9xdkzu4"}
+        mapStyle="mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd"
         mapboxAccessToken={accessToken}
         initialViewState={{
           longitude: -75.168692,
