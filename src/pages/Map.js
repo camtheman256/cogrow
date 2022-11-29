@@ -1,43 +1,54 @@
-import Map, { Popup, useControl } from "react-map-gl";
+import Map, { Marker, NavigationControl, Popup, useControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useUser } from "../hooks";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import mapboxgl from "mapbox-gl";
+import MapPanel from "../components/custom/MapPanel";
 
 export default function MapPage() {
   const accessToken =
     "pk.eyJ1IjoibGluaC10cmluaCIsImEiOiJjbDl3dThkYWswNDNiM25wajhrZXlneTE1In0.9GCUDxTX5FwtVbHDtXz5ew";
-  const [feature, setFeature] = useState(null);
-  const user = useUser()
+  const [selectionMarker, setSelectionMarker] = useState();
+  const [feature, setFeature] = useState();
+  const user = useUser();
   const map = useRef();
 
-  const onMapLoad = useCallback(() => {
-  }, [])
+  const onMapLoad = useCallback(() => {}, []);
+
+  function onMapClick(e) {
+    if(e.features.length) {
+      setSelectionMarker(e.lngLat)
+      setFeature(e.features[0])
+      map.current.flyTo({center: e.lngLat, zoom: 18});
+    }
+  }
 
   return (
-    <>
-      <Map
-        mapStyle="mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd"
-        mapboxAccessToken={accessToken}
-        initialViewState={{
-          longitude: -75.168692,
-          latitude: 39.948699,
-          zoom: 11,
-        }}
-        ref={map}
-        style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-        interactiveLayerIds={['Parcel_Ownership']}
-        onLoad={onMapLoad}
-      >
-        <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
-      </Map>
-    </>
+    <Map
+      mapStyle="mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd"
+      mapboxAccessToken={accessToken}
+      initialViewState={{
+        longitude: -75.168692,
+        latitude: 39.948699,
+        zoom: 11,
+      }}
+      ref={map}
+      style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
+      interactiveLayerIds={["Parcel_Ownership"]}
+      onLoad={onMapLoad}
+      onClick={onMapClick}
+    >
+      <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
+      <NavigationControl />
+      <MapPanel data={feature} />
+      {selectionMarker && <Marker longitude={selectionMarker.lng} latitude={selectionMarker.lat} color="#090" />}
+    </Map>
   );
 }
 
 function Geocoder(props) {
-  useControl(() => new MapboxGeocoder(props))
+  useControl(() => new MapboxGeocoder(props));
   return null;
 }
