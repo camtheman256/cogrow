@@ -49,7 +49,7 @@ export default function MapPage() {
     >
       <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
       <NavigationControl />
-      <MapPanel data={feature} metrics={metrics} />
+      <MapPanel dataEvent={feature} metricsEvent={metrics} />
       {selectionMarker && (
         <Marker
           longitude={selectionMarker.lng}
