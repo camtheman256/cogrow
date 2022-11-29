@@ -14,25 +14,30 @@ import { Card, Col, Row } from "antd";
 import Title from "antd/lib/typography/Title";
 import ProjectCard from "../components/custom/ProjectCard";
 
-
-
-
 function Home() {
-
+  const project1 = {
+    title: "CoGrow Project",
+    subtitle: "Project Code: abcdef",
+    status: "Ongoing",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    numSubmissions: 37,
+    creationDate: "3 days ago",
+    learnMoreLink: "/",
+    imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b",
+  };
 
   return (
     <>
       <div className="layout-content">
         <Row gutter={[24, 0]}>
           <Col md={6}>
-            <Card title="Filter Options">
-              Card filter options can go here
-            </Card>
+            <Card title="Filter Options">Card filter options can go here</Card>
           </Col>
           <Col md={18}>
             <Title>CoGrow Projects</Title>
             <Row gutter={[16, 16]}>
-              <ProjectCard />
+              <ProjectCard {...project1} />
+              <ProjectCard {...project1} />
             </Row>
           </Col>
         </Row>

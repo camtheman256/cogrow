@@ -1,39 +1,67 @@
-import Map, { Popup } from "react-map-gl";
+import Map, {
+  Marker,
+  NavigationControl,
+  Popup,
+  useControl,
+} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState } from "react";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useUser } from "../hooks";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import mapboxgl from "mapbox-gl";
+import MapPanel from "../components/custom/MapPanel";
 
 export default function MapPage() {
   const accessToken =
-    "pk.eyJ1IjoiY2tsZWltYW4xNSIsImEiOiJjazhseTJvcnMwOWdvM2hvOHE2ejk0ZHhoIn0.dp27-MIUTPYjRr-VLw1Rqg";
-  const [popup, setPopup] = useState(null);
-  const user = useUser()
+    "pk.eyJ1IjoibGluaC10cmluaCIsImEiOiJjbDl3dThkYWswNDNiM25wajhrZXlneTE1In0.9GCUDxTX5FwtVbHDtXz5ew";
+  const [selectionMarker, setSelectionMarker] = useState();
+  const [feature, setFeature] = useState();
+  const [metrics, setMetrics] = useState();
+  const user = useUser();
+  const map = useRef();
 
-  function handleMapClick(e) {
-    setPopup(e.lngLat);
-    // query features here for metrics
+  const onMapLoad = useCallback(() => {
+  }, []);
+
+  function onMapClick(e) {
+    if (e.features.some((f) => f.layer.id === "Parcel_Ownership")) {
+      e.features.map((f) => f.layer.id === "Parcel_Ownership" ? setFeature(f) : setMetrics(f))
+      setSelectionMarker(e.lngLat);
+      map.current.flyTo({ center: e.lngLat, zoom: 18 });
+    }
   }
 
   return (
-    <>
-      <Map
-        mapStyle={"mapbox://styles/ckleiman15/cl9w5emm8000b14p5c9xdkzu4"}
-        mapboxAccessToken={accessToken}
-        initialViewState={{
-          longitude: -75.168692,
-          latitude: 39.948699,
-          zoom: 11,
-        }}
-        style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-        onClick={handleMapClick}
-      >
-        {popup && (
-          <Popup longitude={popup.lng} latitude={popup.lat} closeOnClick={false} onClose={() => setPopup()}>
-            <p>Create a Project at ({popup.lng.toFixed(5)}, {popup.lat.toFixed(5)})</p>
-            {!user && <p><b>Please sign in before creating a project.</b></p>}
-          </Popup>
-        )}
-      </Map>
-    </>
+    <Map
+      mapStyle="mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd"
+      mapboxAccessToken={accessToken}
+      initialViewState={{
+        longitude: -75.168692,
+        latitude: 39.948699,
+        zoom: 11,
+      }}
+      ref={map}
+      style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
+      interactiveLayerIds={["Parcel_Ownership", "Block_Index_Composite"]}
+      onLoad={onMapLoad}
+      onClick={onMapClick}
+    >
+      <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
+      <NavigationControl />
+      <MapPanel dataEvent={feature} metricsEvent={metrics} />
+      {selectionMarker && (
+        <Marker
+          longitude={selectionMarker.lng}
+          latitude={selectionMarker.lat}
+          color="#090"
+        />
+      )}
+    </Map>
   );
+}
+
+function Geocoder(props) {
+  useControl(() => new MapboxGeocoder(props));
+  return null;
 }
