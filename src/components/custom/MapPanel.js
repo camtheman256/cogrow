@@ -6,7 +6,7 @@ export default function MapPanel({ data, metrics }) {
       className="map-panel"
       title={data ? "About this lot" : "Pick a lot on the map"}
     >
-      {data && (
+      {data && metrics && (
         <>
           <Typography.Title level={3}>
             {data.properties.ADDRESS}
