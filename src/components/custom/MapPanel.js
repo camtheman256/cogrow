@@ -11,7 +11,7 @@ export default function MapPanel({ data, metrics }) {
           <Typography.Title level={3}>
             {data.properties.ADDRESS}
           </Typography.Title>
-          <Statistic title="% Impervious Cover (ground and structures)" value={data.properties.PERC_IMP} precision={2} suffix="%" />
+          <Statistic title="% Impervious Cover (ground and structures)" value={Math.min(data.properties.PERC_IMP, 100)} precision={2} suffix="%"  />
           <Statistic title="Ownership" value={data.properties.PUBLIC_PRI} />
           <Statistic title="Block Group Equity Index" value={metrics.properties.INDEX_} />
         </>
