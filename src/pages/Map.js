@@ -1,18 +1,20 @@
-import Map, { Popup } from "react-map-gl";
+import Map, { Popup, useControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState } from "react";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useUser } from "../hooks";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import mapboxgl from "mapbox-gl";
 
 export default function MapPage() {
   const accessToken =
     "pk.eyJ1IjoibGluaC10cmluaCIsImEiOiJjbDl3dThkYWswNDNiM25wajhrZXlneTE1In0.9GCUDxTX5FwtVbHDtXz5ew";
-  const [popup, setPopup] = useState(null);
+  const [feature, setFeature] = useState(null);
   const user = useUser()
+  const map = useRef();
 
-  function handleMapClick(e) {
-    setPopup(e.lngLat);
-    // query features here for metrics
-  }
+  const onMapLoad = useCallback(() => {
+  }, [])
 
   return (
     <>
@@ -24,16 +26,18 @@ export default function MapPage() {
           latitude: 39.948699,
           zoom: 11,
         }}
+        ref={map}
         style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-        onClick={handleMapClick}
+        interactiveLayerIds={['Parcel_Ownership']}
+        onLoad={onMapLoad}
       >
-        {popup && (
-          <Popup longitude={popup.lng} latitude={popup.lat} closeOnClick={false} onClose={() => setPopup()}>
-            <p>Create a Project at ({popup.lng.toFixed(5)}, {popup.lat.toFixed(5)})</p>
-            {!user && <p><b>Please sign in before creating a project.</b></p>}
-          </Popup>
-        )}
+        <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
       </Map>
     </>
   );
+}
+
+function Geocoder(props) {
+  useControl(() => new MapboxGeocoder(props))
+  return null;
 }
