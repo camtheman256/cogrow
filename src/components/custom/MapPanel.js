@@ -1,7 +1,15 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, List, Statistic, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Modal,
+  Statistic,
+  Typography,
+} from "antd";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { db } from "../../firebase";
 import { useUser } from "../../hooks";
 
@@ -25,6 +33,7 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
   const user = useUser();
   const docRef = doc(db, "projects", `${parcelData.PARCELID}`);
   const [exists, setExists] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(docRef, (doc) => {
@@ -39,7 +48,7 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
       metrics: parcelMetrics,
       owner: user.uid,
       created: new Date(),
-      status: "ongoing"
+      status: "ongoing",
     });
   }
 
@@ -59,7 +68,14 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
       />
       <Divider />
       {exists ? (
-        <p>There's already a project here.</p>
+        <>
+          <p>
+            There's already a project here.
+            <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
+          </p>
+          <Button onClick={() => setQrOpen(true)}>QR Code</Button>
+          <QRModal link={`https://cogrow.vercel.app/submit/${parcelData.PARCELID}`} open={qrOpen} closeFunc={() => setQrOpen(false)} />
+        </>
       ) : user ? (
         <Button
           type={"primary"}
@@ -73,4 +89,18 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
       )}
     </>
   );
+}
+
+function QRModal({ link, open, closeFunc }) {
+          return <Modal
+            visible={open}
+            title="Project QR Code"
+            footer={null}
+            onCancel={closeFunc}
+          >
+            <img
+              src={`https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=${link}`}
+              alt="QR Code"
+            />
+          </Modal>
 }
