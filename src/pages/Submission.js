@@ -166,7 +166,7 @@ function SubmissionGallery({ project, submissionCollection }) {
   return (
     <Row gutter={[16, 16]}>
       {submissions.map((s, i) => (
-        <Col span={8} key={i}>
+        <Col lg={8} md={12} key={i}>
           <Card title={s.name} cover={<img src={s.picture} alt="Submission" />}>
             {s.description}
           </Card>
