@@ -63,7 +63,7 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
       {exists ? (
         <>
           <p>
-            There's already a project here.
+            There's already a project here.{" "}
             <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
           </p>
           <Button onClick={() => setQrOpen(true)}>QR Code</Button>

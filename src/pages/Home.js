@@ -55,7 +55,7 @@ function Home() {
                   creationDate={p.created.toDate().toLocaleString()}
                   status={p.status}
                   subtitle={`Parcel ${p.data.PARCELID}`}
-                  learnMoreLink="#"
+                  learnMoreLink={`/submit/${p.data.PARCELID}`}
                 />
               ))}
             </Row>
