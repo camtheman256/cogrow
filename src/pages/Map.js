@@ -25,8 +25,7 @@ export default function MapPage() {
   const map = useRef();
   const mapStyle = "mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd";
 
-  const onMapLoad = useCallback(() => {
-  }, []);
+  const onMapLoad = useCallback(() => {}, []);
 
   function onMapClick(e) {
     if (e.features.some((f) => f.layer.id === "Parcel_Ownership")) {
@@ -77,9 +76,9 @@ function ProjectsLayer() {
   const [projectIds, setProjectIds] = useState([]);
 
   useEffect(() => {
-    const parcelIds = [];
-    getDocs(collection(db, "projects")).then((snapshot) => snapshot.forEach(d => parcelIds.push(parseInt(d.id))));
-    setProjectIds(parcelIds);
+    getDocs(collection(db, "projects")).then((snapshot) =>
+      setProjectIds(snapshot.docs.map((d) => parseInt(d.id)))
+    );
   }, []);
 
   return (

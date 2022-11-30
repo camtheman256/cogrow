@@ -38,6 +38,8 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
       data: parcelData,
       metrics: parcelMetrics,
       owner: user.uid,
+      created: new Date(),
+      status: "ongoing"
     });
   }
 
