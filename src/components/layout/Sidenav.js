@@ -16,9 +16,9 @@ import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/cogrow-logo.png";
 
-function SidenavItem({ color, label, icon, active, link, key }) {
+function SidenavItem({ color, label, icon, active, link, key, onClick }) {
   return  <Menu.Item key={key}>
-          <NavLink to={link}>
+          <NavLink to={link} onClick={onClick}>
             <span
               className="icon"
               style={{
@@ -32,7 +32,7 @@ function SidenavItem({ color, label, icon, active, link, key }) {
         </Menu.Item>
 }
 
-function Sidenav({ color }) {
+function Sidenav({ color, toggleDrawer }) {
   const { pathname } = useLocation();
 
   const dashboard = [
@@ -85,7 +85,7 @@ function Sidenav({ color }) {
       </div>
       <hr />
       <Menu theme="light" mode="inline">
-        {routes.map((r, i) => <SidenavItem key={i} color={color} active={pathname === r.link} {...r} />)}
+        {routes.map((r, i) => <SidenavItem key={i} color={color} active={pathname === r.link} {...r} onClick={toggleDrawer} />)}
       </Menu>
     </>
   );
