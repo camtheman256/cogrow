@@ -26,7 +26,7 @@ function Main({ children }) {
   const sidenavType = "transparent";
   const fixed = true;
 
-  const openDrawer = () => setVisible(!visible);
+  const toggleDrawer = () => setVisible(!visible);
 
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
@@ -71,7 +71,7 @@ function Main({ children }) {
             }`}
             style={{ background: sidenavType }}
           >
-            <Sidenav color={sidenavColor} />
+            <Sidenav color={sidenavColor} toggleDrawer={toggleDrawer} />
           </Sider>
         </Layout>
       </Drawer>
@@ -80,7 +80,7 @@ function Main({ children }) {
           <Affix>
             <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
               <Header
-                onPress={openDrawer}
+                onPress={toggleDrawer}
                 name={pathname}
                 subName={pathname}
               />
@@ -89,7 +89,7 @@ function Main({ children }) {
         ) : (
           <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
             <Header
-              onPress={openDrawer}
+              onPress={toggleDrawer}
               name={pathname}
               subName={pathname}
             />
