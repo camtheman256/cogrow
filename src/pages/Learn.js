@@ -1,9 +1,29 @@
+import learnbg from "../assets/images/GSI_PWD.jpeg";
 export default function Learn() {
   return <>
-    <div className="layout-content">
-      
+
+     <div className="learn-img"
+              style={{ padding: 12 }}
+              xs={{ span: 24 }}
+              lg={{ span: 12 }}
+              md={{ span: 12 }}></div>
+              <img src={learnbg} alt="" />
+
+   <div className="layout-content"> 
+   <br></br>
+    <h1>What is Green Infrastructure?</h1>
+    <br></br>
+    “Green stormwater infrastructure (GSI) is an approach to managing stormwater runoff in ways that mimic the natural environment as much as possible, using plants, soil, and stone to filter and manage stormwater more effectively, reducing how much enters our sewer systems, and protecting our rivers and streams.”
+    <br></br> - Philadelphia Water Department
+    <br></br>
+
+  
+<br></br>
+<br></br>
+
+    <body>
       <h1>Permeable paving</h1>
-      <body>Permeable or porous pavement allows water to soak through the surface rather than flow over the surface and into storm drains. This system provides the structural support of conventional pavement but also has an underground stone reservoir.
+      Permeable or porous pavement allows water to soak through the surface rather than flow over the surface and into storm drains. This system provides the structural support of conventional pavement but also has an underground stone reservoir.
 <br></br>
 <br></br>
       <h1>Rain garden</h1>
@@ -60,7 +80,7 @@ A storage trench is a subsurface rectangular bed cut into the street or sidewalk
       <h1>Tree Canopy</h1>
 
       <br></br>
-source - https://water.phila.gov/gsi/tools/
+<a href="https://water.phila.gov/gsi/tools/">Source</a>
 
       </body>
     </div>
