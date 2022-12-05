@@ -32,7 +32,7 @@ export default function SubmissionPage() {
   const projectRef = doc(db, "projects", project);
   const history = useHistory();
   const [projectData, setProjectData] = useState();
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const galleryRef = collection(db, "projects", project, "submissions");
 
   useEffect(() => {
@@ -165,6 +165,11 @@ function SubmissionGallery({ project, submissionCollection }) {
 
   return (
     <Row gutter={[16, 16]}>
+        <Col lg={8} md={12} >
+          <Card title="About this project">
+            info info
+          </Card>
+        </Col>
       {submissions.map((s, i) => (
         <Col lg={8} md={12} key={i}>
           <Card title={s.name} cover={<img src={s.picture} alt="Submission" />}>
