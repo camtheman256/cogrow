@@ -21,6 +21,7 @@ import About from "./pages/About";
 import Learn from "./pages/Learn";
 import MapPage from "./pages/Map";
 import SubmissionPage from "./pages/Submission";
+import Landing from "./pages/Landing"
 
 
 function App() {
@@ -32,11 +33,12 @@ function App() {
         <Route path="/submit/:project" exact component={SubmissionPage} />
         <Main>
           <Switch>
+            <Route exact path="/" component={Landing} />
             <Route exact path="/dashboard" component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/learn" exact component={Learn} />
             <Route path="/map" exact component={MapPage} />
-            <Redirect from="*" to="/dashboard" />
+            <Redirect from="*" to="/" />
           </Switch>
         </Main>
       </Switch>

@@ -35,7 +35,7 @@ export default function ProjectCard({
             <div className="badge_metric_score"> Metrics</div>
           </div>
           <p>{description}</p>
-          <Link to={learnMoreLink}> Learn more </Link>
+          <Link to={learnMoreLink}>Contribute</Link>
           <div className="card-meta">
             <span className="timestamp">
               {" "}

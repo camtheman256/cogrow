@@ -1,12 +1,12 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Divider, Modal, Statistic, Typography } from "antd";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { db } from "../../firebase";
+import { Link } from "react-router-dom";
 import { useUser } from "../../hooks";
 
-export default function MapPanel({ dataEvent, metricsEvent }) {
+export default function MapPanel({ dataEvent, metricsEvent, allProjects }) {
   return (
     <Card
       className="map-panel"
@@ -20,24 +20,17 @@ export default function MapPanel({ dataEvent, metricsEvent }) {
         <ParcelInfo
           parcelData={dataEvent.properties}
           parcelMetrics={metricsEvent.properties}
+          exists={allProjects.includes(dataEvent.properties.PARCELID)}
         />
       )}
     </Card>
   );
 }
 
-function ParcelInfo({ parcelData, parcelMetrics }) {
+function ParcelInfo({ parcelData, parcelMetrics, exists }) {
   const user = useUser();
   const docRef = doc(db, "projects", `${parcelData.PARCELID}`);
-  const [exists, setExists] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(docRef, (doc) => {
-      setExists(doc.exists());
-    });
-    return unsubscribe;
-  }, [docRef]);
 
   async function createProject() {
     await setDoc(docRef, {

@@ -21,11 +21,16 @@ export default function MapPage() {
   const [selectionMarker, setSelectionMarker] = useState();
   const [feature, setFeature] = useState();
   const [metrics, setMetrics] = useState();
+  const [allProjects, setProjects] = useState([]);
   const user = useUser();
   const map = useRef();
   const mapStyle = "mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd";
 
-  const onMapLoad = useCallback(() => {}, []);
+  const onMapLoad = useCallback(() => {
+    getDocs(collection(db, "projects")).then((snapshot) =>
+      setProjects(snapshot.docs.map((d) => parseInt(d.id)))
+    );
+  }, []);
 
   function onMapClick(e) {
     if (e.features.some((f) => f.layer.id === "Parcel_Ownership")) {
@@ -53,9 +58,9 @@ export default function MapPage() {
       onClick={onMapClick}
     >
       <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
-      <ProjectsLayer />
+      <ProjectsLayer projectIds={allProjects} />
       <NavigationControl />
-      <MapPanel dataEvent={feature} metricsEvent={metrics} />
+      <MapPanel dataEvent={feature} metricsEvent={metrics} allProjects={allProjects} />
       {selectionMarker && (
         <Marker
           longitude={selectionMarker.lng}
@@ -72,15 +77,7 @@ function Geocoder(props) {
   return null;
 }
 
-function ProjectsLayer() {
-  const [projectIds, setProjectIds] = useState([]);
-
-  useEffect(() => {
-    getDocs(collection(db, "projects")).then((snapshot) =>
-      setProjectIds(snapshot.docs.map((d) => parseInt(d.id)))
-    );
-  }, []);
-
+function ProjectsLayer({ projectIds }) {
   return (
     <Layer
       type={"fill"}
