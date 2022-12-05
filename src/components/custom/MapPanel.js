@@ -10,7 +10,11 @@ export default function MapPanel({ dataEvent, metricsEvent }) {
   return (
     <Card
       className="map-panel"
-      title={dataEvent ? "About this lot" : "Pick a lot on the map"}
+      title={
+        <Typography.Title level={3}>
+          {dataEvent ? "About this lot" : "Pick a lot on the map"}
+        </Typography.Title>
+      }
     >
       {dataEvent && metricsEvent && (
         <ParcelInfo
@@ -54,7 +58,7 @@ function ParcelInfo({ parcelData, parcelMetrics }) {
         precision={2}
         suffix="%"
       />
-      <Statistic title="Ownership" value={parcelData.PUBLIC_PRI} />
+      <Statistic title="Ownership" value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"} />
       <Statistic
         title="Block Group Equity Index"
         value={parcelMetrics.INDEX_}
