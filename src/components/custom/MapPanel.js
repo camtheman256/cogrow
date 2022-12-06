@@ -65,7 +65,7 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
           </p>
           <Button onClick={() => setQrOpen(true)}>QR Code</Button>
           <QRModal
-            link={`https://cogrow.vercel.app/submit/${parcelData.PARCELID}`}
+            link={`https://www.mitcogrow.org/submit/${parcelData.PARCELID}`}
             open={qrOpen}
             closeFunc={() => setQrOpen(false)}
           />
