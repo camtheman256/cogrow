@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 import logo from "../assets/images/cogrow-logo.png";
-import { UploadOutlined } from "@ant-design/icons";
+import { ConsoleSqlOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Space, Upload } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -34,16 +34,22 @@ export default function SubmissionPage() {
   const [projectData, setProjectData] = useState();
   const [showForm, setShowForm] = useState(true);
   const galleryRef = collection(db, "projects", project, "submissions");
+  const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
-    getDoc(projectRef).then((doc) => {
+    getDoc(projectRef).then(async (doc) => {
       if (doc.exists()) {
         setProjectData(doc.data());
+        const unsubscribe = onSnapshot(query(galleryRef), (snapshot) => {
+          setSubmissions(snapshot.docs.map(d => d.data()))
+        })
+        return unsubscribe;
       } else {
         history.push("/");
       }
     });
-  }, [projectRef, history]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout className="layout-dashboard">
@@ -71,10 +77,7 @@ export default function SubmissionPage() {
           <Typography.Title level={1}>
             Gallery for Project {projectData.data.ADDRESS}
           </Typography.Title>
-          <SubmissionGallery
-            project={project}
-            submissionCollection={galleryRef}
-          />
+          <SubmissionGallery project={project} submissions={submissions} />
         </Layout.Content>
       ) : (
         <h1>Loading...</h1>
@@ -153,23 +156,12 @@ function SubmissionForm({ project, projectData, collection, submittedFunc }) {
   );
 }
 
-function SubmissionGallery({ project, submissionCollection }) {
-  const [submissions, setSubmissions] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(query(submissionCollection), (snapshot) =>
-      setSubmissions(snapshot.docs.map((d) => d.data()))
-    );
-    return unsubscribe;
-  }, [submissionCollection]);
-
+function SubmissionGallery({ project, submissions }) {
   return (
     <Row gutter={[16, 16]}>
-        <Col lg={8} md={12} >
-          <Card title="About this project">
-            info info
-          </Card>
-        </Col>
+      <Col lg={8} md={12}>
+        <Card title="About this project">info info</Card>
+      </Col>
       {submissions.map((s, i) => (
         <Col lg={8} md={12} key={i}>
           <Card title={s.name} cover={<img src={s.picture} alt="Submission" />}>
