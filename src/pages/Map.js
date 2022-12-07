@@ -53,7 +53,7 @@ export default function MapPage() {
       }}
       ref={map}
       style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-      interactiveLayerIds={["Parcel_Ownership", "Block_Index_Composite"]}
+      interactiveLayerIds={["Parcel_Ownership", "Block_Index_Composite02"]}
       onLoad={onMapLoad}
       onClick={onMapClick}
     >
