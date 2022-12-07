@@ -33,7 +33,7 @@ function Home() {
   const [projectsData, setProjectsData] = useState([]);
 
   useEffect(() => {
-    onSnapshot(projectsRef, (snapshot) =>
+    return onSnapshot(projectsRef, (snapshot) =>
       setProjectsData(snapshot.docs.map((d) => d.data()))
     );
   }, []);
