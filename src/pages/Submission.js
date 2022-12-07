@@ -40,7 +40,7 @@ export default function SubmissionPage() {
     getDoc(projectRef).then(async (doc) => {
       if (doc.exists()) {
         setProjectData(doc.data());
-        const unsubscribe = onSnapshot(query(galleryRef), (snapshot) => {
+        const unsubscribe = onSnapshot(galleryRef, (snapshot) => {
           setSubmissions(snapshot.docs.map(d => d.data()))
         })
         return unsubscribe;

@@ -14,7 +14,7 @@ import { Card, Col, Row } from "antd";
 import Title from "antd/lib/typography/Title";
 import { useEffect, useState } from "react";
 import ProjectCard from "../components/custom/ProjectCard";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 
 function Home() {
@@ -33,10 +33,10 @@ function Home() {
   const [projectsData, setProjectsData] = useState([]);
 
   useEffect(() => {
-    getDocs(projectsRef).then((snapshot) =>
+    onSnapshot(projectsRef, (snapshot) =>
       setProjectsData(snapshot.docs.map((d) => d.data()))
     );
-  }, [projectsRef]);
+  }, []);
 
   return (
     <>

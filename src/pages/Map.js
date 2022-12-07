@@ -31,7 +31,7 @@ export default function MapPage() {
   const parcelLayer = "OWNERSHIP_geoloc";
 
   const onMapLoad = useCallback(() => {
-    onSnapshot(query(collection(db, "projects")), (snapshot) => {
+    onSnapshot(collection(db, "projects"), (snapshot) => {
       setProjectIds(snapshot.docs.map((d) => parseInt(d.id)));
       setProjects(snapshot.docs.map((d) => d.data()));
     });
