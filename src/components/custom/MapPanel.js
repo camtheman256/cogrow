@@ -45,17 +45,22 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
   return (
     <>
       <Typography.Title level={3}>{parcelData.ADDRESS}</Typography.Title>
-      <Statistic
-        title="% Impervious Cover (ground and structures)"
-        value={Math.min(parcelData.PERC_IMP, 100)}
-        precision={2}
-        suffix="%"
-      />
-      <Statistic title="Ownership" value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"} />
-      <Statistic
-        title="Block Group Equity Index"
-        value={parcelMetrics.INDEX_}
-      />
+      <div className="parcel-info">
+        <Statistic
+          title="% Impervious Cover (ground and structures)"
+          value={Math.min(parcelData.PERC_IMP, 100)}
+          precision={2}
+          suffix="%"
+        />
+        <Statistic
+          title="Ownership"
+          value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"}
+        />
+        <Statistic
+          title="Block Group Equity Index"
+          value={parcelMetrics.INDEX_}
+        />
+      </div>
       <Divider />
       {exists ? (
         <>

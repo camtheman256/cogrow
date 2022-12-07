@@ -3056,3 +3056,15 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   left: 10px;
   width: 350px;
 }
+
+.parcel-info {
+  height: 200px;
+  overflow: scroll;
+}
+
+.legend-panel {
+  bottom: 15px;
+  left: 10px;
+  width: 300px;
+  position:absolute;
+}

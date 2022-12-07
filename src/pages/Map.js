@@ -14,6 +14,7 @@ import mapboxgl from "mapbox-gl";
 import MapPanel from "../components/custom/MapPanel";
 import { collection, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { Card, Typography } from "antd";
 
 export default function MapPage() {
   const accessToken =
@@ -61,6 +62,7 @@ export default function MapPage() {
       <ProjectsLayer projectIds={allProjects} />
       <NavigationControl />
       <MapPanel dataEvent={feature} metricsEvent={metrics} allProjects={allProjects} />
+      <LegendPanel />
       {selectionMarker && (
         <Marker
           longitude={selectionMarker.lng}
@@ -87,4 +89,10 @@ function ProjectsLayer({ projectIds }) {
       filter={["in", "PARCELID", ...projectIds]}
     />
   );
+}
+
+function LegendPanel() {
+  return <Card className="legend-panel">
+    <Typography.Title level={4}>Legend</Typography.Title>
+  </Card>
 }
