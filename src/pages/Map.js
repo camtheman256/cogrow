@@ -3,6 +3,7 @@ import Map, {
   Marker,
   NavigationControl,
   Popup,
+  Source,
   useControl,
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -12,7 +13,7 @@ import { useUser } from "../hooks";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import mapboxgl from "mapbox-gl";
 import MapPanel from "../components/custom/MapPanel";
-import { collection, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { Card, Typography } from "antd";
 
@@ -23,20 +24,23 @@ export default function MapPage() {
   const [feature, setFeature] = useState();
   const [metrics, setMetrics] = useState();
   const [allProjects, setProjects] = useState([]);
+  const [allProjectIds, setProjectIds] = useState([]);
   const user = useUser();
   const map = useRef();
   const mapStyle = "mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd";
+  const parcelLayer = "OWNERSHIP_geoloc";
 
   const onMapLoad = useCallback(() => {
-    getDocs(collection(db, "projects")).then((snapshot) =>
-      setProjects(snapshot.docs.map((d) => parseInt(d.id)))
-    );
+    onSnapshot(query(collection(db, "projects")), (snapshot) => {
+      setProjectIds(snapshot.docs.map((d) => parseInt(d.id)));
+      setProjects(snapshot.docs.map((d) => d.data()));
+    });
   }, []);
 
   function onMapClick(e) {
-    if (e.features.some((f) => f.layer.id === "Parcel_Ownership")) {
+    if (e.features.some((f) => f.layer.id === parcelLayer)) {
       e.features.map((f) =>
-        f.layer.id === "Parcel_Ownership" ? setFeature(f) : setMetrics(f)
+        f.layer.id === parcelLayer ? setFeature(f) : setMetrics(f)
       );
       setSelectionMarker(e.lngLat);
       map.current.flyTo({ center: e.lngLat, zoom: 18 });
@@ -54,14 +58,18 @@ export default function MapPage() {
       }}
       ref={map}
       style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-      interactiveLayerIds={["Parcel_Ownership", "Block_Index_Composite02"]}
+      interactiveLayerIds={[parcelLayer, "Block_Index_Composite02"]}
       onLoad={onMapLoad}
       onClick={onMapClick}
     >
       <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
-      <ProjectsLayer projectIds={allProjects} />
+      <ProjectsLayer projects={allProjects} />
       <NavigationControl />
-      <MapPanel dataEvent={feature} metricsEvent={metrics} allProjects={allProjects} />
+      <MapPanel
+        dataEvent={feature}
+        metricsEvent={metrics}
+        allProjects={allProjectIds}
+      />
       <LegendPanel />
       {selectionMarker && (
         <Marker
@@ -79,20 +87,30 @@ function Geocoder(props) {
   return null;
 }
 
-function ProjectsLayer({ projectIds }) {
+function ProjectsLayer({ projects }) {
   return (
-    <Layer
-      type={"fill"}
-      source="composite"
-      source-layer="GSI_Philly_Lots_4_WGS_84-95p4qc"
-      paint={{ "fill-color": "#fcf403" }}
-      filter={["in", "PARCELID", ...projectIds]}
-    />
+    <Source
+      data={{
+        type: "FeatureCollection",
+        features: projects.map((p) => ({
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [p.data.Long, p.data.Lat],
+          },
+        })),
+      }}
+      type="geojson"
+    >
+      <Layer type={"circle"} paint={{ "circle-color": "#fcf403", "circle-radius": 10 }} />
+    </Source>
   );
 }
 
 function LegendPanel() {
-  return <Card className="legend-panel">
-    <Typography.Title level={4}>Legend</Typography.Title>
-  </Card>
+  return (
+    <Card className="legend-panel">
+      <Typography.Title level={4}>Legend</Typography.Title>
+    </Card>
+  );
 }

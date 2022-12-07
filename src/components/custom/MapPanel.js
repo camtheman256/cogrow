@@ -1,5 +1,15 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, Modal, Statistic, Typography } from "antd";
+import { InfoCircleFilled, PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Modal,
+  Row,
+  Space,
+  Statistic,
+  Typography,
+} from "antd";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
@@ -31,6 +41,7 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
   const user = useUser();
   const docRef = doc(db, "projects", `${parcelData.PARCELID}`);
   const [qrOpen, setQrOpen] = useState(false);
+  const [indexOpen, setIndexOpen] = useState(false);
 
   async function createProject() {
     await setDoc(docRef, {
@@ -59,8 +70,42 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
         <Statistic
           title="Block Group Equity Index"
           value={parcelMetrics.INDEX_}
+          suffix={<InfoCircleFilled onClick={() => setIndexOpen(true)} />}
         />
       </div>
+      <Modal
+        visible={indexOpen}
+        footer={null}
+        title="About the Block Group Equity Index"
+        onCancel={() => setIndexOpen(false)}
+      >
+        Info about the block group equity index
+        <Row gutter={[16, 16]}>
+          <Col>
+            <Statistic
+              title="Environmental Need"
+              value={parcelMetrics.I_ENVNEED}
+            />
+          </Col>
+          <Col>
+            <Statistic
+              title="% Low Income"
+              value={parcelMetrics.I_LOWINC}
+              suffix="%"
+            />
+          </Col>
+          <Col>
+            <Statistic title="Amenities" value={parcelMetrics.I_AMENITIE} />
+          </Col>
+          <Col>
+            <Statistic title="Tree Canopy" value={parcelMetrics.I_CANOPY} />
+          </Col>
+          <Col>
+            <Statistic title="Parks Access" value={parcelMetrics.I_PARKS} />
+          </Col>
+        </Row>
+
+      </Modal>
       <Divider />
       {exists ? (
         <>
