@@ -57,29 +57,41 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
     <>
       <Typography.Title level={3}>{parcelData.ADDRESS}</Typography.Title>
       <div className="parcel-info">
+      <Statistic
+          title="Block Group Equity Index"
+          value={parcelMetrics.INDEX_}
+          suffix={<InfoCircleFilled onClick={() => setIndexOpen(true)} />}
+        />
+         <Statistic
+          title="Ownership"
+          value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"}
+        />
+        <Statistic
+          title="Owner"
+          value={parcelData.OWNER1}
+        />
         <Statistic
           title="% Impervious Cover (ground and structures)"
           value={Math.min(parcelData.PERC_IMP, 100)}
           precision={2}
           suffix="%"
         />
-        <Statistic
-          title="Ownership"
-          value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"}
+         <Statistic
+          title="Lot Area"
+          value={parcelData.Area}
+          precision={0}
+          suffix="sf"
         />
-        <Statistic
-          title="Block Group Equity Index"
-          value={parcelMetrics.INDEX_}
-          suffix={<InfoCircleFilled onClick={() => setIndexOpen(true)} />}
-        />
+
+       
+
       </div>
       <Modal
         visible={indexOpen}
         footer={null}
-        title="About the Block Group Equity Index"
+        title="About the Green Infrastructure Equity Index"
         onCancel={() => setIndexOpen(false)}
       >
-        Info about the block group equity index
         <Row gutter={[16, 16]}>
           <Col>
             <Statistic
@@ -91,8 +103,8 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
             <Statistic
               title="% Low Income"
               value={parcelMetrics.I_LOWINC}
-              suffix="%"
             />
+           
           </Col>
           <Col>
             <Statistic title="Amenities" value={parcelMetrics.I_AMENITIE} />
@@ -103,6 +115,14 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
           <Col>
             <Statistic title="Parks Access" value={parcelMetrics.I_PARKS} />
           </Col>
+          <Col>
+            <Statistic title="Playground Access" value={parcelMetrics.I_PLAY} />
+          </Col>
+          These are only some of the sub-indices that make up the Green Infrastructure Equity Index Score. 
+            All indices are compiled at the level of the Block Group.
+            <br></br>
+            <br></br>
+            Source: PREACT 
         </Row>
 
       </Modal>
