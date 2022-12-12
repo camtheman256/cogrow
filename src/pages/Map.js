@@ -28,9 +28,11 @@ export default function MapPage() {
   const user = useUser();
   const map = useRef();
   const mapStyle = "mapbox://styles/linh-trinh/clb077v2a000g14s6ru966tjd";
-  const parcelLayer = "OWNERSHIP_geoloc";
+  const parcelLayer = "B_OWNERSHIP_geoloc";
+  const metricsLayers = ["B_Index_Composite", "B_Index_Amenities"];
 
   const onMapLoad = useCallback(() => {
+    console.log(map.current.getStyle())
     return onSnapshot(collection(db, "projects"), (snapshot) => {
       setProjectIds(snapshot.docs.map((d) => parseInt(d.id)));
       setProjects(snapshot.docs.map((d) => d.data()));
@@ -38,10 +40,9 @@ export default function MapPage() {
   }, []);
 
   function onMapClick(e) {
-    if (e.features.some((f) => f.layer.id === parcelLayer)) {
-      e.features.map((f) =>
-        f.layer.id === parcelLayer ? setFeature(f) : setMetrics(f)
-      );
+    if (e.features.length) {
+      setFeature(e.features[0])
+      setMetrics(map.current.queryRenderedFeatures(e.point, {layers: metricsLayers})[0])
       setSelectionMarker(e.lngLat);
       map.current.flyTo({ center: e.lngLat, zoom: 18 });
     }
@@ -58,7 +59,7 @@ export default function MapPage() {
       }}
       ref={map}
       style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-      interactiveLayerIds={[parcelLayer, "Block_Index_Composite02"]}
+      interactiveLayerIds={[parcelLayer]}
       onLoad={onMapLoad}
       onClick={onMapClick}
     >
