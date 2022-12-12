@@ -21,7 +21,6 @@ export default function Learn() {
 <br></br>
 <br></br>
 
-    <body>
       <h1>Permeable paving</h1>
       Permeable or porous pavement allows water to soak through the surface rather than flow over the surface and into storm drains. This system provides the structural support of conventional pavement but also has an underground stone reservoir.
 <br></br>
@@ -77,12 +76,11 @@ A stormwater planter is a specialized sidewalk system that captures runoff from 
 A storage trench is a subsurface rectangular bed cut into the street or sidewalk. The storage areas are designed to infiltrate stormwater or slow its flow into the sewer system.
 <br></br>
 <br></br>
-      <h1>Tree Canopy</h1>
 
       <br></br>
 <a href="https://water.phila.gov/gsi/tools/">Source</a>
 
-      </body>
+      
     </div>
   </>
 }
