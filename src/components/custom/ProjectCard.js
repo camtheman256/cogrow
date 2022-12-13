@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Image } from "antd";
 import "../../assets/styles/card.css";
 import comment from "../../assets/icon/Comment 3px.png";
 import enlarge from "../../assets/icon/enlarge icon.png";
@@ -18,12 +18,7 @@ export default function ProjectCard({
     <Card bordered={false} style={{backgroundColor: '#fafafa', boxShadow: 'none'}}>
       <div className="card-module">
         <div className="thumbnail">
-          <div className="sub_thumbnail">
-            <button className="expand">
-              <img src={enlarge} />
-            </button>
-          </div>
-          <img src={imageUrl} />
+          <Image src={imageUrl} />
         </div>
         <div className="card-content">
           <div className="category">{status}</div>

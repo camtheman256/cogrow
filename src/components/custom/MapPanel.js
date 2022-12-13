@@ -41,7 +41,12 @@ export default function MapPanel({ dataEvent, metricsEvent, allProjects }) {
   );
 }
 
-function ParcelInfo({ parcelData, parcelMetrics, exists }) {
+export function ParcelInfo({
+  parcelData,
+  parcelMetrics,
+  exists = false,
+  showCreateProject = true,
+}) {
   const user = useUser();
   const docRef = doc(db, "projects", `${parcelData.PARCELID}`);
   const [qrOpen, setQrOpen] = useState(false);
@@ -127,36 +132,40 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
           Source: PREACT
         </Row>
       </Modal>
-      <Divider />
-      {exists ? (
+      {showCreateProject && (
         <>
-          <Space>
+          <Divider />
+          {exists ? (
+            <>
+              <Space>
+                <Button
+                  onClick={() => setQrOpen(true)}
+                  icon={<QrcodeOutlined />}
+                  size={"large"}
+                />
+                <Typography.Text style={{ fontSize: "16px" }}>
+                  There's a project here.{" "}
+                  <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
+                </Typography.Text>
+              </Space>
+              <QRModal
+                link={`https://www.mitcogrow.org/submit/${parcelData.PARCELID}`}
+                open={qrOpen}
+                closeFunc={() => setQrOpen(false)}
+              />
+            </>
+          ) : user ? (
             <Button
-              onClick={() => setQrOpen(true)}
-              icon={<QrcodeOutlined />}
-              size={"large"}
-            />
-            <Typography.Text style={{fontSize: '16px'}}>
-              There's a project here.{" "}
-              <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
-            </Typography.Text>
-          </Space>
-          <QRModal
-            link={`https://www.mitcogrow.org/submit/${parcelData.PARCELID}`}
-            open={qrOpen}
-            closeFunc={() => setQrOpen(false)}
-          />
+              type={"primary"}
+              icon={<PlusOutlined />}
+              onClick={createProject}
+            >
+              Create a project here
+            </Button>
+          ) : (
+            <p>Sign in first to create a project</p>
+          )}
         </>
-      ) : user ? (
-        <Button
-          type={"primary"}
-          icon={<PlusOutlined />}
-          onClick={createProject}
-        >
-          Create a project here
-        </Button>
-      ) : (
-        <p>Sign in first to create a project</p>
       )}
     </>
   );

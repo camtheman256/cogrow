@@ -10,7 +10,7 @@ import {
   Row,
   Typography,
 } from "antd";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import logo from "../assets/images/cogrow-logo.png";
 import { ConsoleSqlOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Space, Upload } from "antd";
@@ -26,6 +26,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ParcelInfo } from "../components/custom/MapPanel";
 
 export default function SubmissionPage() {
   const { project } = useParams();
@@ -41,23 +42,25 @@ export default function SubmissionPage() {
       if (doc.exists()) {
         setProjectData(doc.data());
         const unsubscribe = onSnapshot(galleryRef, (snapshot) => {
-          setSubmissions(snapshot.docs.map(d => d.data()))
-        })
+          setSubmissions(snapshot.docs.map((d) => d.data()));
+        });
         return unsubscribe;
       } else {
         history.push("/");
       }
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Layout className="layout-dashboard">
       <Layout.Header>
-        <div className="brand">
-          <img src={logo} alt="" />
-          <span>CoGrow</span>
-        </div>
+        <Link to="/" style={{color:"#000"}}>
+          <div className="brand">
+            <img src={logo} alt="" />
+            <span>CoGrow</span>
+          </div>
+        </Link>
       </Layout.Header>
       {projectData ? (
         <Layout.Content>
@@ -77,7 +80,7 @@ export default function SubmissionPage() {
           <Typography.Title level={1}>
             Gallery for Project {projectData.data.ADDRESS}
           </Typography.Title>
-          <SubmissionGallery project={project} submissions={submissions} />
+          <SubmissionGallery project={projectData} submissions={submissions} />
         </Layout.Content>
       ) : (
         <h1>Loading...</h1>
@@ -160,7 +163,13 @@ function SubmissionGallery({ project, submissions }) {
   return (
     <Row gutter={[16, 16]}>
       <Col lg={8} md={12}>
-        <Card title="About this project">info info</Card>
+        <Card title="About this project">
+          <ParcelInfo
+            parcelData={project.data}
+            parcelMetrics={project.metrics}
+            showCreateProject={false}
+          />
+        </Card>
       </Col>
       {submissions.map((s, i) => (
         <Col lg={8} md={12} key={i}>

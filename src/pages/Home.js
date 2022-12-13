@@ -38,6 +38,11 @@ function Home() {
     );
   }, []);
 
+  const constructStreetViewUrl = (address) =>
+    encodeURI(
+      `https://maps.googleapis.com/maps/api/streetview?location=${address}, Philadelphia, PA&size=600x500&key=AIzaSyDXJ0RymG8MZCgzjDAgskdoLOAKvkWTTEU`
+    );
+
   return (
     <>
       <div className="layout-content">
@@ -56,6 +61,7 @@ function Home() {
                   status={p.status}
                   subtitle={`Parcel ${p.data.PARCELID}`}
                   learnMoreLink={`/submit/${p.data.PARCELID}`}
+                  imageUrl={constructStreetViewUrl(p.data.ADDRESS)}
                 />
               ))}
             </Row>
