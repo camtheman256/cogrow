@@ -21,7 +21,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Col, Col as div, Row, Typography } from "antd";
 
 export default function MapPage() {
   const accessToken =
@@ -61,37 +61,39 @@ export default function MapPage() {
   }
 
   return (
-    <Map
-      mapStyle={mapStyle}
-      mapboxAccessToken={accessToken}
-      initialViewState={{
-        longitude: -75.168692,
-        latitude: 39.948699,
-        zoom: 11,
-      }}
-      ref={map}
-      style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
-      interactiveLayerIds={[parcelLayer]}
-      onLoad={onMapLoad}
-      onClick={onMapClick}
-    >
-      <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
-      <ProjectsLayer projects={allProjects} />
-      <NavigationControl />
-      <MapPanel
-        dataEvent={feature}
-        metricsEvent={metrics}
-        allProjects={allProjectIds}
-      />
-      <LegendPanel />
-      {selectionMarker && (
-        <Marker
-          longitude={selectionMarker[0]}
-          latitude={selectionMarker[1]}
-          color="#090"
+    <div>
+      <Map
+        mapStyle={mapStyle}
+        mapboxAccessToken={accessToken}
+        initialViewState={{
+          longitude: -75.168692,
+          latitude: 39.948699,
+          zoom: 11,
+        }}
+        ref={map}
+        style={{ borderRadius: 10, height: "calc(100vh - 200px)" }}
+        interactiveLayerIds={[parcelLayer]}
+        onLoad={onMapLoad}
+        onClick={onMapClick}
+      >
+        <Geocoder accessToken={accessToken} mapboxgl={mapboxgl} />
+        <ProjectsLayer projects={allProjects} />
+        <NavigationControl />
+        <MapPanel
+          dataEvent={feature}
+          metricsEvent={metrics}
+          allProjects={allProjectIds}
         />
-      )}
-    </Map>
+        {selectionMarker && (
+          <Marker
+            longitude={selectionMarker[0]}
+            latitude={selectionMarker[1]}
+            color="#090"
+          />
+        )}
+      </Map>
+      <LegendPanel />
+    </div>
   );
 }
 
@@ -133,15 +135,65 @@ function LegendPanel() {
     "hsla(339, 100%, 35%, 0.9)",
     "hsla(314, 92%, 14%, 0.92)",
   ];
+
+  const projectColors = [
+    {
+      title: "Completed",
+      color: "hsla(31, 85%, 31%, 0.9)",
+    },
+    {
+      title: "Under Construction",
+      color: "hsla(42, 64%, 63%, 0.9)",
+    },
+    {
+      title: "In Design",
+      color: "hsla(192, 66%, 24%, 0.9)",
+    },
+    {
+      title: "In Preparation",
+      color: "hsla(189, 36%, 42%, 0.9)",
+    },
+  ];
   return (
     <Card className="legend-panel">
-      <Typography.Title level={4}>Equity Index Score</Typography.Title>
-      <Row>
-        <Col>0&emsp;</Col>
-        {colors.map((c, i) => (
-          <Col style={{ backgroundColor: c, height: '30px', width: '30px' }} key={i}></Col>
-        ))}
-        <Col>&emsp;9.2</Col>
+      <Row gutter={[24, 16]}>
+        <Col>
+          <Typography.Title level={4}>Equity Index Score</Typography.Title>
+          <Row>
+            <div>0&emsp;</div>
+            {colors.map((c, i) => (
+              <div
+                style={{ backgroundColor: c, height: "30px", width: "30px" }}
+                key={i}
+              ></div>
+            ))}
+            <div>&emsp;9.2</div>
+          </Row>
+        </Col>
+        <Col>
+          <Typography.Title level={4}>
+            Green Infrastructure Projects
+          </Typography.Title>
+          <Row gutter={15}>
+            {projectColors.map((v, i) => (
+              <Col>
+                <div
+                  style={{
+                    backgroundColor: v.color,
+                    borderRadius: "100%",
+                    width: "15px",
+                    height: "15px",
+                    display: "inline-block",
+                    marginInlineEnd: "5px",
+                    verticalAlign: "middle",
+                  }}
+                  key={i}
+                ></div>
+                <span>{v.title}</span>
+              </Col>
+            ))}
+          </Row>
+        </Col>
       </Row>
     </Card>
   );
