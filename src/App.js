@@ -34,7 +34,7 @@ function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={Landing} />
-            <Route exact path="/dashboard" component={Home} />
+            <Route exact path="/projects" component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/learn" exact component={Learn} />
             <Route path="/map" exact component={MapPage} />

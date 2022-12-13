@@ -18,7 +18,7 @@ export default function Landing() {
         </Typography.Title>
         <Row justify="center">
           <Space>
-            <Link to="/dashboard">
+            <Link to="/projects">
               <Button>Let's Design</Button>
             </Link>
             <Link to="/map">

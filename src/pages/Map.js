@@ -43,8 +43,9 @@ export default function MapPage() {
     if (e.features.length) {
       setFeature(e.features[0])
       setMetrics(map.current.queryRenderedFeatures(e.point, {layers: metricsLayers})[0])
-      setSelectionMarker(e.lngLat);
-      map.current.flyTo({ center: e.lngLat, zoom: 18 });
+      const parcelCenter = [e.features[0].properties.Long, e.features[0].properties.Lat]
+      setSelectionMarker(parcelCenter);
+      map.current.flyTo({ center: parcelCenter, zoom: 17 });
     }
   }
 
@@ -74,8 +75,8 @@ export default function MapPage() {
       <LegendPanel />
       {selectionMarker && (
         <Marker
-          longitude={selectionMarker.lng}
-          latitude={selectionMarker.lat}
+          longitude={selectionMarker[0]}
+          latitude={selectionMarker[1]}
           color="#090"
         />
       )}

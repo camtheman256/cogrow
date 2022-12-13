@@ -59,8 +59,8 @@ function Sidenav({ color, toggleDrawer }) {
   ];
 
   const routes = [{
-    label: 'Dashboard',
-    link: '/dashboard',
+    label: 'Projects',
+    link: '/projects',
     icon: dashboard
   },{
     label: 'About',

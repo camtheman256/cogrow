@@ -3055,10 +3055,12 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   top: 10px;
   left: 10px;
   width: 350px;
+  backdrop-filter: blur(4px);
+  background-color: #ffffffe0;
 }
 
 .parcel-info {
-  height: 200px;
+  height: 30vh;
   overflow: scroll;
 }
 
@@ -3067,4 +3069,6 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   left: 10px;
   width: 300px;
   position:absolute;
+  backdrop-filter: blur(4px);
+  background-color: #ffffffe0;
 }
