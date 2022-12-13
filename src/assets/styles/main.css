@@ -3067,7 +3067,7 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 .legend-panel {
   bottom: 15px;
   left: 10px;
-  width: 300px;
+  width: 350px;
   position:absolute;
   backdrop-filter: blur(4px);
   background-color: #ffffffe0;

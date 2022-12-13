@@ -1,4 +1,8 @@
-import { InfoCircleFilled, PlusOutlined } from "@ant-design/icons";
+import {
+  InfoCircleFilled,
+  PlusOutlined,
+  QrcodeOutlined,
+} from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -42,6 +46,7 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
   const docRef = doc(db, "projects", `${parcelData.PARCELID}`);
   const [qrOpen, setQrOpen] = useState(false);
   const [indexOpen, setIndexOpen] = useState(false);
+  const isPublic = ["CITY", "PUBLIC_NONCITY"].includes(parcelData.PUBLIC_PRI);
 
   async function createProject() {
     await setDoc(docRef, {
@@ -57,34 +62,34 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
     <>
       <Typography.Title level={3}>{parcelData.ADDRESS}</Typography.Title>
       <div className="parcel-info">
-      <Statistic
+        <Statistic
           title="Block Group Equity Index"
           value={parcelMetrics.INDEX_}
           suffix={<InfoCircleFilled onClick={() => setIndexOpen(true)} />}
         />
-         <Statistic
-          title="Ownership"
-          value={parcelData.PUBLIC_PRI !== "PRIVATE" ? "Public" : "Private"}
-        />
         <Statistic
-          title="Owner"
-          value={parcelData.OWNER1}
+          title="Ownership"
+          value={isPublic ? "Public" : "Private"}
+          valueStyle={{
+            backgroundColor: isPublic
+              ? "hsla(259, 100%, 31%, 0.6)"
+              : "hsla(45, 97%, 46%, 0.8)",
+            color: isPublic ? "white" : "black",
+          }}
         />
+        <Statistic title="Owner" value={parcelData.OWNER1} />
         <Statistic
           title="% Impervious Cover (ground and structures)"
           value={Math.min(parcelData.PERC_IMP, 100)}
           precision={2}
           suffix="%"
         />
-         <Statistic
+        <Statistic
           title="Lot Area"
           value={parcelData.Area}
           precision={0}
           suffix="sf"
         />
-
-       
-
       </div>
       <Modal
         visible={indexOpen}
@@ -100,11 +105,7 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
             />
           </Col>
           <Col>
-            <Statistic
-              title="% Low Income"
-              value={parcelMetrics.I_LOWINC}
-            />
-           
+            <Statistic title="% Low Income" value={parcelMetrics.I_LOWINC} />
           </Col>
           <Col>
             <Statistic title="Amenities" value={parcelMetrics.I_AMENITIE} />
@@ -118,22 +119,28 @@ function ParcelInfo({ parcelData, parcelMetrics, exists }) {
           <Col>
             <Statistic title="Playground Access" value={parcelMetrics.I_PLAY} />
           </Col>
-          These are only some of the sub-indices that make up the Green Infrastructure Equity Index Score. 
-            All indices are compiled at the level of the Block Group.
-            <br></br>
-            <br></br>
-            Source: PREACT 
+          These are only some of the sub-indices that make up the Green
+          Infrastructure Equity Index Score. All indices are compiled at the
+          level of the Block Group.
+          <br></br>
+          <br></br>
+          Source: PREACT
         </Row>
-
       </Modal>
       <Divider />
       {exists ? (
         <>
-          <p>
-            There's already a project here.{" "}
-            <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
-          </p>
-          <Button onClick={() => setQrOpen(true)}>QR Code</Button>
+          <Space>
+            <Button
+              onClick={() => setQrOpen(true)}
+              icon={<QrcodeOutlined />}
+              size={"large"}
+            />
+            <Typography.Text style={{fontSize: '16px'}}>
+              There's a project here.{" "}
+              <Link to={`/submit/${parcelData.PARCELID}`}>Contribute!</Link>
+            </Typography.Text>
+          </Space>
           <QRModal
             link={`https://www.mitcogrow.org/submit/${parcelData.PARCELID}`}
             open={qrOpen}

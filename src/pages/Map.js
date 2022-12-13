@@ -13,9 +13,15 @@ import { useUser } from "../hooks";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import mapboxgl from "mapbox-gl";
 import MapPanel from "../components/custom/MapPanel";
-import { collection, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { Card, Typography } from "antd";
+import { Card, Col, Row, Typography } from "antd";
 
 export default function MapPage() {
   const accessToken =
@@ -32,7 +38,7 @@ export default function MapPage() {
   const metricsLayers = ["B_Index_Composite", "B_Index_Amenities"];
 
   const onMapLoad = useCallback(() => {
-    console.log(map.current.getStyle())
+    console.log(map.current.getStyle());
     return onSnapshot(collection(db, "projects"), (snapshot) => {
       setProjectIds(snapshot.docs.map((d) => parseInt(d.id)));
       setProjects(snapshot.docs.map((d) => d.data()));
@@ -41,9 +47,14 @@ export default function MapPage() {
 
   function onMapClick(e) {
     if (e.features.length) {
-      setFeature(e.features[0])
-      setMetrics(map.current.queryRenderedFeatures(e.point, {layers: metricsLayers})[0])
-      const parcelCenter = [e.features[0].properties.Long, e.features[0].properties.Lat]
+      setFeature(e.features[0]);
+      setMetrics(
+        map.current.queryRenderedFeatures(e.point, { layers: metricsLayers })[0]
+      );
+      const parcelCenter = [
+        e.features[0].properties.Long,
+        e.features[0].properties.Lat,
+      ];
       setSelectionMarker(parcelCenter);
       map.current.flyTo({ center: parcelCenter, zoom: 17 });
     }
@@ -104,15 +115,34 @@ function ProjectsLayer({ projects }) {
       }}
       type="geojson"
     >
-      <Layer type={"circle"} paint={{ "circle-color": "#fcf403", "circle-radius": 10 }} />
+      <Layer
+        type={"circle"}
+        paint={{ "circle-color": "#fcf403", "circle-radius": 10 }}
+      />
     </Source>
   );
 }
 
 function LegendPanel() {
+  const colors = [
+    "hsla(0, 55%, 94%, 0.6)",
+    "hsla(0, 100%, 95%, 0.8)",
+    "hsla(0, 83%, 91%, 0.8)",
+    "hsla(346, 68%, 56%, 0.35)",
+    "hsla(346, 68%, 56%, 0.75)",
+    "hsla(339, 100%, 35%, 0.9)",
+    "hsla(314, 92%, 14%, 0.92)",
+  ];
   return (
     <Card className="legend-panel">
-      <Typography.Title level={4}>Legend</Typography.Title>
+      <Typography.Title level={4}>Equity Index Score</Typography.Title>
+      <Row>
+        <Col>0&emsp;</Col>
+        {colors.map((c, i) => (
+          <Col style={{ backgroundColor: c, height: '30px', width: '30px' }} key={i}></Col>
+        ))}
+        <Col>&emsp;9.2</Col>
+      </Row>
     </Card>
   );
 }
