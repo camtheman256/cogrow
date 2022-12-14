@@ -41,6 +41,8 @@ export default function MapPanel({ dataEvent, metricsEvent, allProjects }) {
   );
 }
 
+
+
 export function ParcelInfo({
   parcelData,
   parcelMetrics,
@@ -102,31 +104,41 @@ export function ParcelInfo({
         title="About the Green Infrastructure Equity Index"
         onCancel={() => setIndexOpen(false)}
       >
+        
         <Row gutter={[16, 16]}>
           <Col>
             <Statistic
               title="Environmental Need"
               value={parcelMetrics.I_ENVNEED}
+              precision={4}
             />
           </Col>
           <Col>
-            <Statistic title="% Low Income" value={parcelMetrics.I_LOWINC} />
+            <Statistic title="% Low Income" value={parcelMetrics.I_LOWINC} 
+            precision={4}/>
           </Col>
           <Col>
-            <Statistic title="Amenities" value={parcelMetrics.I_AMENITIE} />
-          </Col>
-          <Col>
-            <Statistic title="Tree Canopy" value={parcelMetrics.I_CANOPY} />
+            <Statistic title="Amenities" value={parcelMetrics.I_AMENITIE}
+            precision={4} />
           </Col>
           <Col>
             <Statistic title="Parks Access" value={parcelMetrics.I_PARKS} />
           </Col>
           <Col>
-            <Statistic title="Playground Access" value={parcelMetrics.I_PLAY} />
+            <Statistic title="Playground Access" value={parcelMetrics.I_PLAY} 
+            precision={4}/>
+          </Col>
+          <Col>
+            <Statistic title="Tree Canopy" value={parcelMetrics.I_CANOPY}
+            precision={4} />
+          </Col>
+          <Col>
+            <Statistic title="Ozone" value={parcelMetrics.I_OZONE}
+            precision={4} />
           </Col>
           These are only some of the sub-indices that make up the Green
           Infrastructure Equity Index Score. All indices are compiled at the
-          level of the Block Group.
+          level of the Block Group. All scores are out of 1. 
           <br></br>
           <br></br>
           Source: PREACT
