@@ -57,7 +57,7 @@ function Home() {
 
   const filteredProjects = projectsData
     .filter((p) =>
-      searchVal ? p.data.ADDRESS.toLowerCase().includes(searchVal) : true
+      searchVal ? p.data.ADDRESS.toLowerCase().includes(searchVal.toLowerCase()) : true
     )
     .filter((p) =>
       sqftFilter
