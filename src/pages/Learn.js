@@ -2,12 +2,6 @@ import learnbg from "../assets/images/GSI_PWD.jpeg";
 export default function Learn() {
   return <>
 
-     <div className="learn-img"
-              style={{ padding: 12 }}
-              xs={{ span: 24 }}
-              lg={{ span: 12 }}
-              md={{ span: 12 }}></div>
-              <img src={learnbg} alt="" />
 
    <div className="layout-content"> 
    <br></br>
