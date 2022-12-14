@@ -10,7 +10,17 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { Card, Col, Input, Row, Slider, Typography } from "antd";
+import {
+  Card,
+  Checkbox,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Slider,
+  Typography,
+} from "antd";
 import Title from "antd/lib/typography/Title";
 import { useEffect, useState } from "react";
 import ProjectCard from "../components/custom/ProjectCard";
@@ -35,6 +45,8 @@ function Home() {
   const [sqftFilter, setSqftFilter] = useState();
   const [sqftRange, setSqftRange] = useState({ min: 0, max: 1 });
   const [searchVal, setSearchVal] = useState("");
+  const [publicFilter, setPublicFilter] = useState(true);
+  const [privateFilter, setPrivateFilter] = useState(true);
 
   useEffect(() => {
     return onSnapshot(projectsRef, (snapshot) => {
@@ -57,13 +69,20 @@ function Home() {
 
   const filteredProjects = projectsData
     .filter((p) =>
-      searchVal ? p.data.ADDRESS.toLowerCase().includes(searchVal.toLowerCase()) : true
+      searchVal
+        ? p.data.ADDRESS.toLowerCase().includes(searchVal.toLowerCase())
+        : true
     )
     .filter((p) =>
       sqftFilter
         ? sqftFilter[0] <= p.data.Area && p.data.Area <= sqftFilter[1]
         : true
-    );
+    )
+    .filter(
+      (p) =>
+        publicFilter || !["CITY", "PUBLIC_NONCITY"].includes(p.data.PUBLIC_PRI)
+    )
+    .filter((p) => privateFilter || p.data.PUBLIC_PRI !== "PRIVATE");
 
   return (
     <>
@@ -77,6 +96,7 @@ function Home() {
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
               />
+              <Divider />
               <Typography.Title level={5}>Square Footage</Typography.Title>
               <Slider
                 range
@@ -85,6 +105,20 @@ function Home() {
                 value={sqftFilter}
                 onChange={setSqftFilter}
               />
+              <Divider />
+              <Typography.Title level={5}>Ownership</Typography.Title>
+              <Checkbox
+                checked={privateFilter}
+                onChange={(e) => setPrivateFilter(e.target.checked)}
+              >
+                Private
+              </Checkbox>
+              <Checkbox
+                checked={publicFilter}
+                onChange={(e) => setPublicFilter(e.target.checked)}
+              >
+                Public
+              </Checkbox>
             </Card>
           </Col>
           <Col md={18}>
