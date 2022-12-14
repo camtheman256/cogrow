@@ -10,12 +10,13 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { Card, Col, Row } from "antd";
+import { Card, Col, Input, Row, Slider, Typography } from "antd";
 import Title from "antd/lib/typography/Title";
 import { useEffect, useState } from "react";
 import ProjectCard from "../components/custom/ProjectCard";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 function Home() {
   const project1 = {
@@ -31,11 +32,22 @@ function Home() {
   };
   const projectsRef = collection(db, "projects");
   const [projectsData, setProjectsData] = useState([]);
+  const [sqftFilter, setSqftFilter] = useState();
+  const [sqftRange, setSqftRange] = useState({ min: 0, max: 1 });
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    return onSnapshot(projectsRef, (snapshot) =>
-      setProjectsData(snapshot.docs.map((d) => d.data()))
-    );
+    return onSnapshot(projectsRef, (snapshot) => {
+      const projects = snapshot.docs.map((d) => d.data());
+      setProjectsData(projects);
+      const sqftProjects = projects.map((d) => d.data.Area);
+      const sqftFilterRange = {
+        min: Math.floor(Math.min(...sqftProjects)),
+        max: Math.ceil(Math.max(...sqftProjects)),
+      };
+      setSqftFilter([sqftFilterRange.min, sqftFilterRange.max]);
+      setSqftRange(sqftFilterRange);
+    });
   }, []);
 
   const constructStreetViewUrl = (address) =>
@@ -43,17 +55,42 @@ function Home() {
       `https://maps.googleapis.com/maps/api/streetview?location=${address}, Philadelphia, PA&size=600x500&key=AIzaSyDXJ0RymG8MZCgzjDAgskdoLOAKvkWTTEU`
     );
 
+  const filteredProjects = projectsData
+    .filter((p) =>
+      searchVal ? p.data.ADDRESS.toLowerCase().includes(searchVal) : true
+    )
+    .filter((p) =>
+      sqftFilter
+        ? sqftFilter[0] <= p.data.Area && p.data.Area <= sqftFilter[1]
+        : true
+    );
+
   return (
     <>
       <div className="layout-content">
         <Row gutter={[24, 0]}>
           <Col md={6}>
-            <Card title="Filter Options">Card filter options can go here</Card>
+            <Card title="Filter Options">
+              <Typography.Title level={5}>Address Search</Typography.Title>
+              <Input
+                type="text"
+                value={searchVal}
+                onChange={(e) => setSearchVal(e.target.value)}
+              />
+              <Typography.Title level={5}>Square Footage</Typography.Title>
+              <Slider
+                range
+                min={sqftRange.min}
+                max={sqftRange.max}
+                value={sqftFilter}
+                onChange={setSqftFilter}
+              />
+            </Card>
           </Col>
           <Col md={18}>
             <Title>CoGrow Projects</Title>
             <Row gutter={[16, 16]}>
-              {projectsData.map((p, i) => (
+              {filteredProjects.map((p, i) => (
                 <ProjectCard
                   key={i}
                   title={p.data.ADDRESS}
