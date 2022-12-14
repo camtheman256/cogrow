@@ -27,6 +27,7 @@ import {
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import signinbg from "../assets/images/Philly_2.webp";
 import { auth } from "../firebase";
+import { HomeFilled, HomeOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const template = (
@@ -86,9 +87,9 @@ export default function SignIn() {
           <div className="header-col header-nav">
             <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
-                <Link to="/dashboard">
-                  {template}
-                  <span> Dashboard</span>
+                <Link to="/">
+                  <HomeOutlined />
+                  <span> Home</span>
                 </Link>
               </Menu.Item>
             </Menu>

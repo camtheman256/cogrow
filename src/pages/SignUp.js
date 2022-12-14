@@ -31,6 +31,7 @@ import {
   TwitterOutlined,
   InstagramOutlined,
   GithubOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { auth } from "../firebase";
@@ -105,9 +106,9 @@ export default function SignUp() {
           <div className="header-col header-nav">
             <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1">
-                <Link to="/dashboard">
-                  {template}
-                  <span> Dashboard</span>
+                <Link to="/">
+                  <HomeOutlined />
+                  <span>Home</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="4">
